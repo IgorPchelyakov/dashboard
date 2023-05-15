@@ -1,10 +1,26 @@
-import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
-import loginSlice from './features/login/login.slice';
+import {
+  Action,
+  ThunkAction,
+  configureStore,
+  combineReducers,
+} from '@reduxjs/toolkit';
+import authReducer from './features/login/login.slice';
+import employeesReducer from './features/employees/employees.slice';
+import { api } from './services/api';
+import { listenerMiddleware } from '@/middleware/auth';
+
+const rootReducer = combineReducers({
+  [api.reducerPath]: api.reducer,
+  auth: authReducer,
+  employees: employeesReducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    login: loginSlice,
-  },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(api.middleware)
+      .prepend(listenerMiddleware.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

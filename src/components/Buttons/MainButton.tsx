@@ -33,7 +33,7 @@ const MainButton: FC<Props> = ({
     <>
       <Form.Item>
         <Button
-          className="w-full items-center bg-black text-yellow-400"
+          className="flex items-center justify-center bg-black text-yellow-400"
           htmlType={htmlType}
           type={type}
           danger={danger}

@@ -1,7 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Layout as AntLayout } from 'antd';
 import Header from './Header/Header';
-
 interface LayoutProps {
   children: ReactNode;
 }

@@ -4,21 +4,31 @@ import { NamePath } from 'antd/es/form/interface';
 
 type Props = {
   name: string;
-  placeholder: string;
+  placeholder?: string;
   dependencies?: NamePath[];
+  label?: string;
+  required?: boolean;
 };
 
-const PasswordInput: FC<Props> = ({ name, placeholder, dependencies }) => {
+const PasswordInput: FC<Props> = ({
+  name,
+  placeholder,
+  dependencies,
+  label,
+  required,
+}) => {
   return (
     <>
       <Form.Item
         name={name}
         dependencies={dependencies}
         hasFeedback
+        style={{ marginBottom: '12px' }}
+        label={label}
         rules={[
           {
-            required: true,
-            message: 'Required field',
+            required: required,
+            message: `Обов'язкове поле`,
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
@@ -44,7 +54,7 @@ const PasswordInput: FC<Props> = ({ name, placeholder, dependencies }) => {
           }),
         ]}
       >
-        <Input.Password placeholder={placeholder} size="large" />
+        <Input.Password placeholder={placeholder} size="small" />
       </Form.Item>
     </>
   );
