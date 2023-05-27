@@ -34,42 +34,45 @@ const Header: FC = () => {
   };
   return (
     <>
-      <Layout.Header className="mb-5 flex min-h-[60px] items-center justify-between bg-white py-5">
-        <Space>
-          <MainMenuDrawer
-            title={'Menu'}
-            placement={'left'}
-            closable={false}
-            onClose={onMenuClose}
-            onClick={showMenuDrawer}
-            open={menuOpen}
-            icon={<MenuOutlined />}
-            htmlType={'button'}
-            type={'ghost'}
-          >
-            <Space>
-              <div className="flex flex-col gap-2">
-                <Link to={Paths.home}>Home</Link>
-                <Link to={Paths.employees}>Employees</Link>
-              </div>
-            </Space>
-          </MainMenuDrawer>
-        </Space>
-        <Space>
-          <MainMenuDrawer
-            title={'Account info'}
-            placement={'right'}
-            closable={false}
-            onClose={onInfoMenuClose}
-            open={infoMenu}
-            onClick={showInfoDrawer}
-            htmlType={'button'}
-            type={'ghost'}
-            icon={<UserOutlined />}
-          >
-            <MainButton onClick={onLogoutClick}>Log Out</MainButton>
-          </MainMenuDrawer>
-        </Space>
+      <Layout.Header
+        style={{ fontFamily: 'Inter' }}
+        className="mb-5 flex min-h-[60px] items-center justify-between bg-white py-5"
+      >
+        <MainMenuDrawer
+          title={'Menu'}
+          placement={'left'}
+          closable={false}
+          onClose={onMenuClose}
+          onClick={showMenuDrawer}
+          open={menuOpen}
+          icon={<MenuOutlined />}
+          htmlType={'button'}
+          type={'ghost'}
+        >
+          <Space>
+            <div className="flex flex-col gap-2">
+              <Link to={Paths.home}>Головна сторінка</Link>
+              <Link to={Paths.posts}>Стрічка новин</Link>
+              <Link to={Paths.postAdd}>Створити публікацію</Link>
+              <Link to={Paths.media}>Медіфайли</Link>
+              <Link to={Paths.employees}>Співробітники</Link>
+              <Link to={Paths.banners}>Банери</Link>
+            </div>
+          </Space>
+        </MainMenuDrawer>
+        <MainMenuDrawer
+          title={'Account info'}
+          placement={'right'}
+          closable={false}
+          onClose={onInfoMenuClose}
+          open={infoMenu}
+          onClick={showInfoDrawer}
+          htmlType={'button'}
+          type={'ghost'}
+          icon={<UserOutlined />}
+        >
+          <MainButton onClick={onLogoutClick}>Log Out</MainButton>
+        </MainMenuDrawer>
       </Layout.Header>
     </>
   );

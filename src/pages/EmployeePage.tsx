@@ -69,10 +69,7 @@ const EmployeePage: FC = () => {
             className="absolute right-4 top-2"
           />
           <div className="flex w-full gap-10">
-            <Avatar
-              src={data.avatarUrl}
-              className="max-h=[100px] h-full w-full max-w-[100px]"
-            />
+            <Avatar src={data.avatarUrl} className="mt-4 h-[100px] w-[100px]" />
             <div className="mx-auto flex w-full max-w-[900px] gap-10">
               <div className="flex w-full gap-10">
                 <div className="pt-6 text-gray-400">

@@ -26,18 +26,6 @@ const employeeSlice = createSlice({
         state.employees = action.payload;
       },
     );
-    // builder.addMatcher(
-    //   employeesApi.endpoints.createEmployee.matchFulfilled,
-    //   (state, action) => {
-    //     state.employee = action.payload;
-    //   },
-    // );
-    // builder.addMatcher(
-    //   employeesApi.endpoints.getEmployee.matchFulfilled,
-    //   (state, action) => {
-    //     state.employee = action.payload;
-    //   },
-    // );
   },
 });
 

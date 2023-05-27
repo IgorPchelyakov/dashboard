@@ -4,6 +4,7 @@ import Layout from '@/components/Layout/Layout';
 import { Paths } from '@/paths';
 import { useGetAllEmployeesQuery } from '@/redux/services/employees';
 import { PlusCircleOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,14 +16,16 @@ const EmployeesPage: FC = () => {
   return (
     <>
       <Layout>
-        <MainButton
-          type={'primary'}
-          onClick={goToAddUser}
-          icon={<PlusCircleOutlined />}
-        >
-          Add Employee
-        </MainButton>
-        {isLoading && <div>Loading...</div>}
+        <div className="mx-auto flex max-w-[1200px] justify-end">
+          <MainButton
+            type={'primary'}
+            onClick={goToAddUser}
+            icon={<PlusCircleOutlined />}
+          >
+            Створити співробітника
+          </MainButton>
+        </div>
+        {isLoading && <Spin />}
         {data &&
           data.map((data) => (
             <>

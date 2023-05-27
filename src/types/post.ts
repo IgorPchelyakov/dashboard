@@ -1,0 +1,23 @@
+export type Post = {
+  id: string;
+  publishedAt: Date;
+  feed: [];
+  postType: string;
+  topic: string;
+  author: string;
+  title: string;
+  desc: string;
+  showDesc: boolean;
+  mainImage: string;
+  imageSize: boolean;
+  content: string;
+  live: boolean;
+  showAuthorDesc: boolean;
+  showAuthor: boolean;
+  publishOnSocialMedia: boolean;
+  views: number;
+  createdAt: Date;
+  updatedAt: Date;
+  UserId: string;
+  userId: string;
+};

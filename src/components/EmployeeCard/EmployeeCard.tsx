@@ -39,10 +39,7 @@ const EmployeeCard: FC<Employee> = ({
           >
             Переглянути профіль
           </Button>
-          <Avatar
-            src={avatarUrl}
-            className="max-h=[100px] h-full w-full max-w-[100px]"
-          />
+          <Avatar src={avatarUrl} className="mt-4 h-[100px] w-[100px]" />
           <div className="mx-auto flex w-full max-w-[900px] gap-10">
             <div className="flex w-full gap-10">
               <div className="pt-6 text-gray-400">

@@ -15,6 +15,14 @@ import AddEmployeePage from './pages/AddEmployeePage';
 import CreateStatus from './pages/status/createStatus';
 import EmployeePage from './pages/EmployeePage';
 import EditEmployeePage from './pages/EditEmployeePage';
+import PostsPage from './pages/Posts/PostsPage';
+import PostPage from './pages/Posts/PostPage';
+import EditPostPage from './pages/Posts/EditPostPage';
+import AddPostPage from './pages/Posts/AddPostPage';
+import MediasPage from './pages/Media/MediasPage';
+import BannersPage from './pages/Banners/BannersPage';
+import BannerPage from './pages/Banners/BannerPage';
+import BannerAddPage from './pages/Banners/BannerAddPage';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot(rootElement);
@@ -69,6 +77,78 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <EditEmployeePage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.posts}`,
+    element: (
+      <PrivateRoute>
+        <PostsPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.postAdd}`,
+    element: (
+      <PrivateRoute>
+        <AddPostPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.post}/:id`,
+    element: (
+      <PrivateRoute>
+        <PostPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.post}/edit/:id`,
+    element: (
+      <PrivateRoute>
+        <EditPostPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.banners}`,
+    element: (
+      <PrivateRoute>
+        <BannersPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.bannerAdd}`,
+    element: (
+      <PrivateRoute>
+        <BannerAddPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.banner}/:id`,
+    element: (
+      <PrivateRoute>
+        <BannerPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.banner}/edit/:id`,
+    element: (
+      <PrivateRoute>
+        <EditPostPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: `${Paths.media}`,
+    element: (
+      <PrivateRoute>
+        <MediasPage />
       </PrivateRoute>
     ),
   },

@@ -8,9 +8,9 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
-      <div className="container mx-auto">
+      <div className="container mx-auto" style={{ fontFamily: 'Inter' }}>
         <Header />
-        <AntLayout.Content style={{ height: '100%' }}>
+        <AntLayout.Content style={{ height: '100%', fontFamily: 'Inter' }}>
           {children}
         </AntLayout.Content>
       </div>

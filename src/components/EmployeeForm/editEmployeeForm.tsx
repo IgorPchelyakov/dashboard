@@ -1,4 +1,4 @@
-import { Card, Divider, Form, Row, Space } from 'antd';
+import { Button, Card, Divider, Form, Input, Row, Space, Upload } from 'antd';
 import { FC } from 'react';
 import MainInput from '../Inputs/MainInput';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -9,6 +9,7 @@ import CustomTextArea from '../TextArea/CustomTextArea';
 import CustomSelect from '../Select/CustomSelect';
 import CustomSwitch from '../Switch/Switch';
 import { roles } from './options';
+import { UploadOutlined } from '@ant-design/icons';
 
 type Props<T> = {
   onFinish: (values: T) => void;
@@ -25,6 +26,7 @@ const EditEmployeeForm: FC<Props<Employee>> = ({
   error,
   employee,
 }) => {
+  console.log(employee);
   return (
     <>
       <Card title={title} style={{ maxWidth: '1200px', width: '100%' }}>
@@ -61,7 +63,12 @@ const EditEmployeeForm: FC<Props<Employee>> = ({
           <Divider />
           <div className="wrapper flex gap-9">
             <Row style={{ width: '100%', maxWidth: '200px' }}>
-              <MainInput type={'text'} name={'avatarUrl'} />
+              {/* <MainInput type={'text'} name={'avatarUrl'} /> */}
+              <Form.Item name={'file'}>
+                <Upload>
+                  <Button icon={<UploadOutlined />}></Button>
+                </Upload>
+              </Form.Item>
             </Row>
             <Divider
               type={'vertical'}

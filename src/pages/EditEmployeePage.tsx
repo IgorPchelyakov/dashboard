@@ -41,13 +41,14 @@ const EditEmployeePage: FC = () => {
   if (isLoading) {
     return <span>Loading...</span>;
   }
+
   return (
     <>
       <Layout>
         <Row align={'middle'} justify={'center'}>
           <EditEmployeeForm
-            title={'Edit employee'}
-            btnText={'Edit'}
+            title={'Редагувати співробітника'}
+            btnText={'Зберегти'}
             error={error}
             employee={data}
             onFinish={handleEditUser}

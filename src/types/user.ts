@@ -21,8 +21,9 @@ export type Employee = {
   instagramLink?: string;
   twitterLink?: string;
   descUser?: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null | undefined;
   accessRights: boolean;
+  file?: File | null;
 };
 
 export type EmployeeWithoutId = Omit<Employee, 'id'>;
