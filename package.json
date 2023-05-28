@@ -13,6 +13,8 @@
     "@types/react-redux": "7.1.25",
     "antd": "5.4.7",
     "moment": "2.29.4",
+    "quill-image-drop-module": "1.0.3",
+    "quill-image-resize-module": "3.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-quill": "2.0.0",

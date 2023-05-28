@@ -18,10 +18,11 @@ import { Employee } from '@/types/user';
 import MainButton from '../Buttons/MainButton';
 import { useGetAllMediaQuery } from '@/redux/services/media';
 import PostMediaCard from './PostMediaCard';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { FileImageOutlined } from '@ant-design/icons';
 import { quillModules } from './quillModules';
+import PostMediaQuillCard from './PostMediaQuillCard';
 
 type Props<T> = {
   onFinish: (values: T) => void;
@@ -35,7 +36,6 @@ type Props<T> = {
 const AddPostForm: FC<Props<Post>> = ({
   onFinish,
   btnText,
-  title,
   error,
   post,
   employees,
@@ -46,10 +46,13 @@ const AddPostForm: FC<Props<Post>> = ({
   }));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalQuillOpen, setIsModalQuillOpen] = useState(false);
   const { data, isLoading } = useGetAllMediaQuery();
 
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  const [selectedImageQuillUrl, setSelectedImageQuillUrl] = useState('');
   const [form] = Form.useForm();
+  const quillRef = useRef();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -60,9 +63,32 @@ const AddPostForm: FC<Props<Post>> = ({
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const showModalQuill = () => {
+    setIsModalQuillOpen(true);
+  };
+  const handleOkQuill = () => {
+    setIsModalQuillOpen(false);
+  };
+  const handleCancelQuill = () => {
+    setIsModalQuillOpen(false);
+  };
 
   const handleImageSelect = (imageUrl) => {
     setSelectedImageUrl(imageUrl);
+    setIsModalOpen(false);
+  };
+  const handleImageQuillSelect = (imageInfo) => {
+    const { url, alt, author } = imageInfo;
+    setSelectedImageQuillUrl(url);
+
+    const editor = quillRef.current.getEditor();
+    const range = editor.getSelection(true);
+
+    const quillImage =
+      `<img src="${url}" alt="${alt}" style="max-width: 100%;">` +
+      `<p>${alt}. ${author}</p>`;
+    editor.clipboard.dangerouslyPasteHTML(range.index, quillImage);
+    setIsModalQuillOpen(false);
   };
 
   const handleFinish = (values) => {
@@ -72,6 +98,18 @@ const AddPostForm: FC<Props<Post>> = ({
 
   const handleContentChange = (value) => {
     form.setFieldsValue({ content: value });
+  };
+
+  const CustomImageButton = () => {
+    const handleOpenModal = () => {
+      showModalQuill();
+    };
+
+    return (
+      <button className="ql-custom-button" onClick={handleOpenModal}>
+        <FileImageOutlined className="mr-2" /> Додати зображення
+      </button>
+    );
   };
 
   return (
@@ -168,18 +206,29 @@ const AddPostForm: FC<Props<Post>> = ({
             <Switch size={'default'} className="bg-black" />
           </Form.Item>
           {/* TODO: */}
-          <Form.Item label="Контент" name={'content'}>
-            <ReactQuill modules={quillModules} onChange={handleContentChange} />
-          </Form.Item>
-          <Form.Item name={'showAuthorDesc'} label={'Додати опис автора'}>
-            <Switch size={'default'} className="bg-black" />
-          </Form.Item>
-          <Form.Item name={'showAuthor'} label={'Приховати автора'}>
-            <Switch size={'default'} className="bg-black" />
-          </Form.Item>
-          <Form.Item name={'live'} label={'Наживо'}>
-            <Switch size={'default'} className="bg-black" />
-          </Form.Item>
+          <div className="relative">
+            <div className="absolute left-[350px] top-3 z-20">
+              <CustomImageButton />
+            </div>
+            <Form.Item name={'content'}>
+              <ReactQuill
+                modules={quillModules}
+                onChange={handleContentChange}
+                ref={quillRef}
+              />
+            </Form.Item>
+          </div>
+          <div className="flex justify-end gap-5">
+            <Form.Item name={'showAuthorDesc'} label={'Додати опис автора'}>
+              <Switch size={'default'} className="bg-black" />
+            </Form.Item>
+            <Form.Item name={'showAuthor'} label={'Приховати автора'}>
+              <Switch size={'default'} className="bg-black" />
+            </Form.Item>
+            <Form.Item name={'live'} label={'Наживо'}>
+              <Switch size={'default'} className="bg-black" />
+            </Form.Item>
+          </div>
           <MainButton htmlType="submit">{btnText}</MainButton>
           <ErrorMessage message={error} />
         </Form>
@@ -208,9 +257,31 @@ const AddPostForm: FC<Props<Post>> = ({
               ))}
           </div>
         </Modal>
-        <Form.Item label="Контент" name={'content'}>
-          {/* Quill editor code */}
-        </Form.Item>
+        <Modal
+          open={isModalQuillOpen}
+          title={'Медіа архів'}
+          footer={null}
+          onCancel={handleCancelQuill}
+          className="min-w-[1200px]"
+        >
+          <div className="mb-4 border border-black"></div>
+          {isLoading && <Spin />}
+          <div className="grid grid-cols-5 gap-4">
+            {data &&
+              data.map((data) => (
+                <PostMediaQuillCard
+                  key={data.id}
+                  id={data.id}
+                  desc={data.desc}
+                  author={data.author}
+                  userId={data.userId}
+                  imgUrl={data.imgUrl}
+                  title={data.title}
+                  onSelect={handleImageQuillSelect}
+                />
+              ))}
+          </div>
+        </Modal>
       </div>
     </>
   );
