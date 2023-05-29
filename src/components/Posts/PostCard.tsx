@@ -1,10 +1,16 @@
 import { Paths } from '@/paths';
 import { Post } from '@/types/post';
-import { EditOutlined, EyeOutlined } from '@ant-design/icons';
-import { Button, Card, Divider } from 'antd';
-import { FC } from 'react';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { Button, Card, Divider, Modal, message } from 'antd';
+import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import { useGetEmployeeQuery } from '@/redux/services/employees';
+import {
+  useGetAllPostsQuery,
+  useRemovePostMutation,
+} from '@/redux/services/posts';
+import { isErrorWithMessage } from '@/utils/is-error-with-message';
 
 const PostCard: FC<Post> = ({
   id,
@@ -37,10 +43,53 @@ const PostCard: FC<Post> = ({
   const date = moment(publishedAt).format('DD.MM.YYYY');
   const time = moment(publishedAt).format('HH:mm');
   const isPublished = moment(publishedAt).isBefore(moment());
-  const status = isPublished ? 'У черзі до стрічки' : 'Опубліковано';
+  const status = isPublished ? 'Опубліковано' : 'У черзі до стрічки';
+  const { data } = useGetEmployeeQuery(UserId);
+
+  const formattedFeed = feed.replace(/[\[\]",]/g, ' ');
+  const uniqueWords = Array.from(new Set(formattedFeed.split(' ')));
+  const uniqueFeed = uniqueWords.join(' ');
+
+  const [removePost] = useRemovePostMutation();
+  const [isDeleteModalOpen, setIsDeleteOpenModal] = useState(false);
+  const { refetch } = useGetAllPostsQuery();
+  const [error, setError] = useState('');
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'Публікацію видалено',
+    });
+  };
+
+  const showDeleteModal = () => {
+    setIsDeleteOpenModal(true);
+  };
+  const hideDeleteModal = () => {
+    setIsDeleteOpenModal(false);
+  };
+  const handleDeletePost = async () => {
+    hideDeleteModal();
+
+    try {
+      await removePost(id).unwrap();
+      success();
+      refetch();
+    } catch (err) {
+      const maybeError = isErrorWithMessage(err);
+
+      if (maybeError) {
+        setError(err.data.message);
+      } else {
+        setError('Unknow error');
+      }
+    }
+  };
 
   return (
     <>
+      {contextHolder}
       <Card className="mx-auto mb-8 max-w-[1200px]">
         <div className="flex items-center justify-between">
           <div className="flex w-full items-center justify-between">
@@ -49,14 +98,16 @@ const PostCard: FC<Post> = ({
             </div>
             <Divider className="min-h-[60px]" type={'vertical'} />
             <div className="flex w-full gap-4">
-              <div>ID: {formatId(id)}</div>
+              <div className="ml-5">ID: {formatId(id)}</div>
               <div>
                 {date} о {time}
               </div>
-              <div>{UserId}</div>
+              <div>
+                {data?.lastName} {data?.firstName} {data?.middleName}
+              </div>
             </div>
           </div>
-          <div className="">
+          <div className="flex gap-1">
             <Button
               type={'text'}
               onClick={() => {
@@ -64,11 +115,17 @@ const PostCard: FC<Post> = ({
               }}
               icon={<EditOutlined />}
             ></Button>
+            <Button
+              type={'text'}
+              icon={<DeleteOutlined />}
+              danger
+              onClick={showDeleteModal}
+            />
           </div>
         </div>
         <Divider />
         <div className="flex h-full items-center gap-2">
-          <div className="w-[200px]">{feed}</div>
+          <div className="w-[200px]">{uniqueFeed}</div>
           <Divider className="min-h-[20px]" type={'vertical'} />
           <div className="w-[150px]">{postType}</div>
           <Divider className="min-h-[20px]" type={'vertical'} />
@@ -77,6 +134,16 @@ const PostCard: FC<Post> = ({
           </div>
           <div>{status}</div>
         </div>
+        <Modal
+          title="Попередження"
+          open={isDeleteModalOpen}
+          onOk={handleDeletePost}
+          onCancel={hideDeleteModal}
+          okText={'Підтвердити'}
+          cancelText={'Відміна'}
+        >
+          Ви дійсно хочете видалити публікацію?
+        </Modal>
       </Card>
     </>
   );

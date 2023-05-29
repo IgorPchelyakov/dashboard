@@ -4,7 +4,16 @@ type UserData = {
   login: string;
   password: string;
 };
-type ResponseLoginData = UserData & { id: string; token: string };
+type ResponseLoginData = UserData & {
+  id: string;
+  token: string;
+  avatarUrl: string;
+  lastName: string;
+  middleName: string;
+  firstName: string;
+  job: string;
+  role: string;
+};
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({

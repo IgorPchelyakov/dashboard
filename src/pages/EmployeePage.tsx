@@ -5,7 +5,7 @@ import { useRemoveEmployeeMutation } from '@/redux/services/employees';
 import { useGetEmployeeQuery } from '@/redux/services/employees';
 import { isErrorWithMessage } from '@/utils/is-error-with-message';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Divider, Modal } from 'antd';
+import { Avatar, Button, Card, Divider, Modal, Spin } from 'antd';
 import { FC, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ const EmployeePage: FC = () => {
   const [removeEmployee] = useRemoveEmployeeMutation();
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Spin />;
   }
 
   if (!data) {

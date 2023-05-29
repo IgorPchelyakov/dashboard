@@ -3,7 +3,8 @@ export type Post = {
   publishedAt: Date;
   feed: [];
   postType: string;
-  topic: string;
+  section: string;
+  block: string;
   author: string;
   title: string;
   desc: string;

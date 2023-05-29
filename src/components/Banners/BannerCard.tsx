@@ -1,8 +1,6 @@
-import React, { FC } from 'react';
-import Layout from '../Layout/Layout';
+import { FC } from 'react';
 import { Banner } from '@/types/banner';
-import { Button, Card, Image } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Card, Image } from 'antd';
 import moment from 'moment';
 
 const BannerCard: FC<Banner> = ({

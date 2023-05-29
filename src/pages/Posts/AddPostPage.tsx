@@ -17,7 +17,7 @@ const AddPostPage: FC = () => {
   const handleAddPost = async (data: Post) => {
     try {
       await addPost(data).unwrap();
-      navigate(`${Paths.status}/created`);
+      navigate(`${Paths.posts}`);
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 

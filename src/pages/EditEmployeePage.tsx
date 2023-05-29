@@ -7,7 +7,7 @@ import {
 } from '@/redux/services/employees';
 import { Employee } from '@/types/user';
 import { isErrorWithMessage } from '@/utils/is-error-with-message';
-import { Row } from 'antd';
+import { Row, Spin } from 'antd';
 import { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -18,14 +18,50 @@ const EditEmployeePage: FC = () => {
   const { data, isLoading } = useGetEmployeeQuery(params.id || '');
   const [editEmployee] = useEditEmployeeMutation();
 
-  const handleEditUser = async (employee: Employee) => {
-    try {
-      const editedEmployee = {
-        ...data,
-        ...employee,
-      };
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string>('');
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    setAvatarFile(file);
 
-      await editEmployee(editedEmployee).unwrap();
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setAvatarPreview('');
+    }
+  };
+
+  const handleEditUser = async (data: Employee) => {
+    try {
+      const formData = new FormData();
+      formData.append('id', params.id);
+      formData.append('login', data.login);
+      formData.append('password', data.password);
+      formData.append('confirmPassword', data.confirmPassword);
+      formData.append('lastName', data.lastName);
+      formData.append('firstName', data.firstName);
+      formData.append('middleName', data.middleName);
+      formData.append('nickName', data.nickName);
+      formData.append('job', data.job);
+      formData.append('city', data.city);
+      formData.append('tel', data.tel);
+      formData.append('email', data.email);
+      formData.append('telegramLink', data.telegramLink);
+      formData.append('facebookLink', data.facebookLink);
+      formData.append('instagramLink', data.instagramLink);
+      formData.append('twitterLink', data.twitterLink);
+      formData.append('descUser', data.descUser);
+      formData.append('role', data.role);
+      formData.append('accessRights', data.accessRights);
+      if (avatarFile) {
+        formData.append('avatarFile', avatarFile);
+      }
+
+      await editEmployee(formData).unwrap();
       navigate(`${Paths.status}/updated`);
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
@@ -39,9 +75,8 @@ const EditEmployeePage: FC = () => {
   };
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Spin />;
   }
-
   return (
     <>
       <Layout>
@@ -52,6 +87,8 @@ const EditEmployeePage: FC = () => {
             error={error}
             employee={data}
             onFinish={handleEditUser}
+            handleAvatarChange={handleAvatarChange}
+            avatarPreview={avatarPreview}
           />
         </Row>
       </Layout>

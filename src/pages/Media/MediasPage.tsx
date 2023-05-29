@@ -1,19 +1,26 @@
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import Layout from '@/components/Layout/Layout';
 import MediaCard from '@/components/Media/MediaCard';
-import { Paths } from '@/paths';
 import { useCurrentQuery } from '@/redux/services/auth';
 import {
   useAddMediaMutation,
-  useEditMediaMutation,
   useGetAllMediaQuery,
   useRemoveMediaMutation,
 } from '@/redux/services/media';
 import { Media } from '@/types/media';
 import { isErrorWithMessage } from '@/utils/is-error-with-message';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Form, Image, Input, Modal, Spin, message } from 'antd';
-import { FC, useState } from 'react';
+import { DeleteOutlined } from '@ant-design/icons';
+import {
+  Button,
+  Form,
+  Image,
+  Input,
+  Modal,
+  Pagination,
+  Spin,
+  message,
+} from 'antd';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 const MediasPage: FC = () => {
   const { data, isLoading, refetch } = useGetAllMediaQuery();
@@ -119,18 +126,71 @@ const MediasPage: FC = () => {
     }
   };
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Media[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      const filteredMedia = data.filter((media: Media) =>
+        media.title.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+      setSearchResults(filteredMedia);
+    }
+  }, [data, searchQuery]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 35;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return searchResults.slice(startIndex, endIndex);
+  }, [currentPage, searchResults]);
+
   return (
     <>
       <Layout>
         {contextHolder}
         <div className="mx-auto mb-1 flex w-full max-w-[1200px] items-center">
-          <h2 className="text-2xl font-bold">Медіа архів</h2>
-          <Button type={'link'} onClick={showModal} className="text-black">
-            Додати медіа до архіву
-          </Button>
+          <div className="mb-4 flex w-full items-center justify-between">
+            <div className="flex items-center">
+              <h2 className="text-2xl font-bold">Медіа архів</h2>
+              <Button type={'link'} onClick={showModal} className="text-black">
+                Додати медіа до архіву
+              </Button>
+            </div>
+            <div className="flex">
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Пошук за назвою"
+                className="mr-2"
+                size={'small'}
+              />
+              <Button
+                onClick={() => setSearchQuery('')}
+                className="text-red-500"
+                size={'middle'}
+              >
+                Очистити
+              </Button>
+            </div>
+          </div>
         </div>
         <div className="mx-auto mb-5 max-w-[1200px] border-b border-black"></div>
-        <div className="mx-auto grid max-w-[1200px] grid-cols-5 items-center justify-between gap-6">
+        <Pagination
+          current={currentPage}
+          total={searchResults.length}
+          pageSize={pageSize}
+          onChange={handlePageChange}
+          showSizeChanger={false}
+          className="mb-4 flex justify-end"
+        />
+        <div className="mx-auto mb-6 grid max-w-[1200px] grid-cols-5 items-center justify-between gap-6">
           {isLoading && <Spin />}
           <Modal
             title={'Додати медіа до архіву'}
@@ -173,8 +233,8 @@ const MediasPage: FC = () => {
               <ErrorMessage message={error} />
             </Form>
           </Modal>
-          {data &&
-            data.map((data) => (
+          {paginatedData.length > 0 &&
+            paginatedData.map((data) => (
               <MediaCard
                 key={data.id}
                 id={data.id}

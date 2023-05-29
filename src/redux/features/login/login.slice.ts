@@ -4,7 +4,18 @@ import { RootState } from '@/redux/store';
 import { UserLogin } from '@/types/user';
 
 interface InitialState {
-  user: (UserLogin & { id: string; token: string }) | null;
+  user:
+    | (UserLogin & {
+        id: string;
+        token: string;
+        avatarUrl: string;
+        lastName: string;
+        middleName: string;
+        firstName: string;
+        job: string;
+        role: string;
+      })
+    | null;
   isAuthenticated: boolean;
 }
 

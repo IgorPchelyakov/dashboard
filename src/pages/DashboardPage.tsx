@@ -5,7 +5,9 @@ const DashboardPage: FC = () => {
   return (
     <>
       <Layout>
-        <div>DashboardPage</div>
+        <div className="mx-auto flex items-center justify-center">
+          Ласкаво просимо до Робочого столу
+        </div>
       </Layout>
     </>
   );

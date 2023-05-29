@@ -3,9 +3,9 @@ import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 const Statuses: Record<string, string> = {
-  created: 'Employee created',
-  updated: 'User update',
-  deleted: 'User deleted',
+  created: 'Створено успішно',
+  updated: 'Оновлення успішне',
+  deleted: 'Видалено',
 };
 
 const CreateStatus: FC = () => {
@@ -18,7 +18,7 @@ const CreateStatus: FC = () => {
           title={status ? Statuses[status] : 'Not found'}
           extra={
             <Button key={'dashboard'}>
-              <Link to="/">Go home</Link>
+              <Link to="/">На домашню сторінку</Link>
             </Button>
           }
         />

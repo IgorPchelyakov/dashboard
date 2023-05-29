@@ -1,5 +1,5 @@
 import { Media } from '@/types/media';
-import { Image, Modal } from 'antd';
+import { Image } from 'antd';
 import { FC } from 'react';
 
 const MediaCard: FC<Media> = ({ id, imgUrl, onClick }) => {

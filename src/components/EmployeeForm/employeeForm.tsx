@@ -1,4 +1,4 @@
-import { Card, Divider, Form, Row, Space } from 'antd';
+import { Card, Divider, Form, Image, Input, Row, Space } from 'antd';
 import { FC } from 'react';
 import MainInput from '../Inputs/MainInput';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -16,6 +16,8 @@ type Props<T> = {
   title: string;
   error?: string;
   employee?: T;
+  handleAvatarChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  avatarPreview?: string | null;
 };
 
 const EmployeeForm: FC<Props<EmployeeWithoutId>> = ({
@@ -24,6 +26,8 @@ const EmployeeForm: FC<Props<EmployeeWithoutId>> = ({
   title,
   error,
   employee,
+  handleAvatarChange,
+  avatarPreview,
 }) => {
   return (
     <>
@@ -60,9 +64,22 @@ const EmployeeForm: FC<Props<EmployeeWithoutId>> = ({
           </Row>
           <Divider />
           <div className="wrapper flex gap-9">
-            <Row style={{ width: '100%', maxWidth: '200px' }}>
-              <MainInput type={'text'} name={'avatarUrl'} />
-            </Row>
+            <Form.Item name="avatarFile" className="flex flex-col items-center">
+              {avatarPreview && (
+                <Image
+                  src={avatarPreview}
+                  width={100}
+                  height={100}
+                  alt="Avatar Preview"
+                  className="rounded-[50%]"
+                />
+              )}
+              <Input
+                type="file"
+                onChange={handleAvatarChange}
+                accept="image/png, image/jpg, image/jpeg"
+              />
+            </Form.Item>
             <Divider
               type={'vertical'}
               style={{ minHeight: '100%', height: '400px' }}

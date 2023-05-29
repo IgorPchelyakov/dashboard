@@ -5,4 +5,6 @@ export type Media = {
   author: string;
   title: string;
   userId: string;
+  onClick?: () => void;
+  onSelect: (imageUrl: string) => void;
 };

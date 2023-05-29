@@ -1,4 +1,4 @@
-import { Button, Card, Divider, Form, Input, Row, Space, Upload } from 'antd';
+import { Card, Divider, Form, Image, Input, Row, Space } from 'antd';
 import { FC } from 'react';
 import MainInput from '../Inputs/MainInput';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -9,7 +9,6 @@ import CustomTextArea from '../TextArea/CustomTextArea';
 import CustomSelect from '../Select/CustomSelect';
 import CustomSwitch from '../Switch/Switch';
 import { roles } from './options';
-import { UploadOutlined } from '@ant-design/icons';
 
 type Props<T> = {
   onFinish: (values: T) => void;
@@ -17,6 +16,8 @@ type Props<T> = {
   title: string;
   error?: string;
   employee?: T;
+  handleAvatarChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  avatarPreview?: string | null;
 };
 
 const EditEmployeeForm: FC<Props<Employee>> = ({
@@ -25,8 +26,9 @@ const EditEmployeeForm: FC<Props<Employee>> = ({
   title,
   error,
   employee,
+  handleAvatarChange,
+  avatarPreview,
 }) => {
-  console.log(employee);
   return (
     <>
       <Card title={title} style={{ maxWidth: '1200px', width: '100%' }}>
@@ -63,11 +65,24 @@ const EditEmployeeForm: FC<Props<Employee>> = ({
           <Divider />
           <div className="wrapper flex gap-9">
             <Row style={{ width: '100%', maxWidth: '200px' }}>
-              {/* <MainInput type={'text'} name={'avatarUrl'} /> */}
-              <Form.Item name={'file'}>
-                <Upload>
-                  <Button icon={<UploadOutlined />}></Button>
-                </Upload>
+              <Form.Item
+                name="avatarFile"
+                className="flex flex-col items-center"
+              >
+                {avatarPreview && (
+                  <Image
+                    src={avatarPreview}
+                    width={100}
+                    height={100}
+                    alt="Avatar Preview"
+                    className="rounded-[50%]"
+                  />
+                )}
+                <Input
+                  type="file"
+                  onChange={handleAvatarChange}
+                  accept="image/png, image/jpg, image/jpeg"
+                />
               </Form.Item>
             </Row>
             <Divider
