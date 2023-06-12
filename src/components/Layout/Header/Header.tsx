@@ -56,8 +56,8 @@ const Header: FC = () => {
             <Space>
               <div className="flex flex-col gap-2">
                 <Link to={Paths.home}>Головна сторінка</Link>
-                <Link to={Paths.posts}>Стрічка новин</Link>
-                <Link to={Paths.postAdd}>Створити публікацію</Link>
+                <Link to={Paths.news}>Стрічка новин</Link>
+                <Link to={Paths.newsAdd}>Створити публікацію</Link>
                 <Link to={Paths.media}>Медіфайли</Link>
                 <Link to={Paths.employees}>Співробітники</Link>
                 <Link to={Paths.banners}>Банери</Link>

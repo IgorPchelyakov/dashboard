@@ -20,5 +20,7 @@ export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithRetry,
   refetchOnMountOrArgChange: true,
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
   endpoints: () => ({}),
 });

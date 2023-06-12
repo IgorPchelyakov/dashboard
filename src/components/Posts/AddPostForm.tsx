@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { Post } from '@/types/post';
+import { News } from '@/types/news';
 import {
   Button,
   Cascader,
@@ -24,7 +24,7 @@ import 'react-quill/dist/quill.snow.css';
 import { FileImageOutlined } from '@ant-design/icons';
 import { quillModules } from './quillModules';
 import PostMediaQuillCard from './PostMediaQuillCard';
-import AddMediaPost from '@/pages/Posts/AddMediaPost';
+import AddMediaPost from '@/pages/News/AddMediaNews';
 import { Media } from '@/types/media';
 import locale from 'antd/es/date-picker/locale/uk_UA';
 import dayjs from 'dayjs';
@@ -47,11 +47,11 @@ interface ImageInfo {
   author: string;
 }
 
-const AddPostForm: FC<Props<Post>> = ({
+const AddPostForm: FC<Props<News>> = ({
   onFinish,
   btnText,
   error,
-  post,
+  news,
   employees,
 }) => {
   const authors = employees?.map((employee) => ({
@@ -103,7 +103,7 @@ const AddPostForm: FC<Props<Post>> = ({
     setIsModalQuillOpen(false);
   };
 
-  const handleFinish = (values: Post) => {
+  const handleFinish = (values: News) => {
     const updatedValues = { ...values, mainImage: selectedImageUrl };
     onFinish(updatedValues);
   };
@@ -161,7 +161,7 @@ const AddPostForm: FC<Props<Post>> = ({
         <Form
           name="form"
           onFinish={handleFinish}
-          initialValues={post}
+          initialValues={news}
           layout={'vertical'}
           size={'small'}
         >
@@ -178,7 +178,6 @@ const AddPostForm: FC<Props<Post>> = ({
                 style={{ width: '350px' }}
                 options={feeds}
                 placeholder={'Оберіть стрічку'}
-                multiple
                 maxTagCount="responsive"
               />
             </Form.Item>

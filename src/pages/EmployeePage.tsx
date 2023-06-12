@@ -1,6 +1,7 @@
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import Layout from '@/components/Layout/Layout';
 import { Paths } from '@/paths';
+import { useCurrentQuery } from '@/redux/services/auth';
 import { useRemoveEmployeeMutation } from '@/redux/services/employees';
 import { useGetEmployeeQuery } from '@/redux/services/employees';
 import { isErrorWithMessage } from '@/utils/is-error-with-message';
@@ -16,6 +17,9 @@ const EmployeePage: FC = () => {
   const [isModalOpen, setIsOpenModal] = useState(false);
   const { data, isLoading } = useGetEmployeeQuery(params.id || '');
   const [removeEmployee] = useRemoveEmployeeMutation();
+  const { data: currentUser } = useCurrentQuery();
+
+  const currentUserRole = currentUser?.role;
 
   if (isLoading) {
     return <Spin />;
@@ -33,17 +37,22 @@ const EmployeePage: FC = () => {
   };
   const handleDeleteEmployee = async () => {
     hideModal();
+    if (
+      currentUserRole === 'Super Admin' ||
+      currentUserRole === 'Головний редактор' ||
+      currentUserRole === 'Редактор головної редакції'
+    ) {
+      try {
+        await removeEmployee(data.id).unwrap();
+        navigate(`${Paths.status}/deleted`);
+      } catch (err) {
+        const maybeError = isErrorWithMessage(err);
 
-    try {
-      await removeEmployee(data.id).unwrap();
-      navigate(`${Paths.status}/deleted`);
-    } catch (err) {
-      const maybeError = isErrorWithMessage(err);
-
-      if (maybeError) {
-        setError(err.data.message);
-      } else {
-        setError('Unknow error');
+        if (maybeError) {
+          setError(err.data.message);
+        } else {
+          setError('Unknow error');
+        }
       }
     }
   };
@@ -55,19 +64,25 @@ const EmployeePage: FC = () => {
           title={`${data.lastName} ${data.firstName} ${data.middleName}`}
           className="relative mx-auto mb-8 max-w-[1200px]"
         >
-          <Button
-            type={'text'}
-            icon={<EditOutlined />}
-            onClick={() => navigate(`${Paths.employeeEdit}/${data.id}`)}
-            className="absolute right-14 top-2"
-          />
-          <Button
-            type={'text'}
-            icon={<DeleteOutlined />}
-            danger
-            onClick={showModal}
-            className="absolute right-4 top-2"
-          />
+          {(currentUserRole === 'Super Admin' ||
+            currentUserRole === 'Головний редактор' ||
+            currentUserRole === 'Редактор головної редакції') && (
+            <>
+              <Button
+                type={'text'}
+                icon={<EditOutlined />}
+                onClick={() => navigate(`${Paths.employeeEdit}/${data.id}`)}
+                className="absolute right-14 top-2"
+              />
+              <Button
+                type={'text'}
+                icon={<DeleteOutlined />}
+                danger
+                onClick={showModal}
+                className="absolute right-4 top-2"
+              />
+            </>
+          )}
           <div className="flex w-full gap-10">
             <Avatar src={data.avatarUrl} className="mt-4 h-[100px] w-[100px]" />
             <div className="mx-auto flex w-full max-w-[900px] gap-10">
