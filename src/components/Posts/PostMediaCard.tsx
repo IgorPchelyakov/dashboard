@@ -2,9 +2,14 @@ import { Media } from '@/types/media';
 import { Image } from 'antd';
 import { FC } from 'react';
 
-const PostMediaCard: FC<Media> = ({ id, imgUrl, onSelect }) => {
+const PostMediaCard: FC<Media> = ({ id, imgUrl, desc, author, onSelect }) => {
   const handleImageClick = () => {
-    onSelect(imgUrl);
+    const imageInfo = {
+      url: imgUrl,
+      alt: desc,
+      author: author,
+    };
+    onSelect(imageInfo);
   };
 
   return (

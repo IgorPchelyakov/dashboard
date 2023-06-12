@@ -39,7 +39,7 @@ const Header: FC = () => {
     <>
       <Layout.Header
         style={{ fontFamily: 'Inter' }}
-        className="fixed left-0 right-0 top-0 z-10 mb-5 min-h-[60px] bg-white px-0 pb-5 pt-3"
+        className="fixed left-0 right-0 top-0 z-10 mb-5 h-[40px] bg-white px-0 pb-5"
       >
         <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between ">
           <MainMenuDrawer
@@ -60,7 +60,7 @@ const Header: FC = () => {
                 <Link to={Paths.newsAdd}>Створити публікацію</Link>
                 <Link to={Paths.media}>Медіфайли</Link>
                 <Link to={Paths.employees}>Співробітники</Link>
-                <Link to={Paths.banners}>Банери</Link>
+                {/* <Link to={Paths.banners}>Банери</Link> */}
               </div>
             </Space>
           </MainMenuDrawer>

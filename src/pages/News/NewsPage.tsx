@@ -58,7 +58,7 @@ const NewsPage: FC = () => {
             <h1 className="mb-5 text-3xl">{data.title}</h1>
             <p className="mb-5 border-b pb-5 text-xl font-light">{data.desc}</p>
           </div>
-          <figure className="mx-auto mb-5 flex justify-center">
+          <figure className="mx-auto mb-5 flex flex-col justify-center">
             <Image
               src={data.mainImage}
               width={data.imageSize === false ? 1200 : 600}
@@ -66,7 +66,9 @@ const NewsPage: FC = () => {
               className="object-cover"
               preview={true}
             />
-            <figcaption></figcaption>
+            <figcaption className="mt-2 max-w-[600px] text-[12px] leading-[15px] text-gray-500">
+              {data.mainImgDesc} {data.mainImgAuthor}
+            </figcaption>
           </figure>
           <div
             className={s.content}

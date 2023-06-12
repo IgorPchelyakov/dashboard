@@ -63,7 +63,11 @@ const AddPostForm: FC<Props<News>> = ({
   const [isModalQuillOpen, setIsModalQuillOpen] = useState(false);
   const { data, isLoading } = useGetAllMediaQuery();
 
-  const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  const [selectedImage, setSelectedImage] = useState<ImageInfo>({
+    url: '',
+    alt: '',
+    author: '',
+  });
   // eslint-disable-next-line
   const [selectedImageQuillUrl, setSelectedImageQuillUrl] = useState('');
   const [form] = Form.useForm();
@@ -82,8 +86,8 @@ const AddPostForm: FC<Props<News>> = ({
     setIsModalQuillOpen(false);
   };
 
-  const handleImageSelect = (imageUrl: string) => {
-    setSelectedImageUrl(imageUrl);
+  const handleImageSelect = (imageInfo: ImageInfo) => {
+    setSelectedImage(imageInfo);
     setIsModalOpen(false);
   };
   const handleImageQuillSelect = (imageInfo: ImageInfo) => {
@@ -93,18 +97,19 @@ const AddPostForm: FC<Props<News>> = ({
     const editor = quillRef.current?.getEditor();
     if (editor) {
       const range = editor.getSelection(true);
-      const quillImage = `
-          <figure>
-          <img src="${url}" alt="${alt}" style="max-width: 100%;">
-          <figcaption>${alt}. ${author}</figcaption>
-          </figure>`;
+      const quillImage = `<div><img src="${url}" alt="${alt}" <p>${alt} ${author}</p></div>`;
       editor.clipboard.dangerouslyPasteHTML(range.index, quillImage);
     }
     setIsModalQuillOpen(false);
   };
 
   const handleFinish = (values: News) => {
-    const updatedValues = { ...values, mainImage: selectedImageUrl };
+    const updatedValues = {
+      ...values,
+      mainImage: selectedImage.url,
+      mainImgDesc: selectedImage.alt,
+      mainImgAuthor: selectedImage.author,
+    };
     onFinish(updatedValues);
   };
 
@@ -179,6 +184,13 @@ const AddPostForm: FC<Props<News>> = ({
                 options={feeds}
                 placeholder={'Оберіть стрічку'}
                 maxTagCount="responsive"
+                showSearch
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  (option?.label ?? '')
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
               />
             </Form.Item>
             <Form.Item name={'postType'}>
@@ -214,8 +226,7 @@ const AddPostForm: FC<Props<News>> = ({
             <Form.Item name={'UserId'}>
               <Select
                 showSearch
-                mode={'multiple'}
-                placeholder={'Оберіть автора / співавтора'}
+                placeholder={'Оберіть автора'}
                 style={{ width: '300px' }}
                 options={authors}
                 optionFilterProp="children"
@@ -235,12 +246,12 @@ const AddPostForm: FC<Props<News>> = ({
               </Button>
               <Form.Item name={'mainImage'}>
                 <Input
-                  value={selectedImageUrl}
+                  value={selectedImage.url}
                   onChange={(e) => e.target.value}
                   style={{ display: 'none' }}
                 />
                 <Image
-                  src={selectedImageUrl}
+                  src={selectedImage.url}
                   preview={false}
                   width={400}
                   height={200}
@@ -250,10 +261,17 @@ const AddPostForm: FC<Props<News>> = ({
             </div>
             <div className="flex w-full flex-col pt-14">
               <Form.Item label="Заголовок публікації" name={'title'}>
-                <Input />
+                <Input showCount maxLength={200} />
               </Form.Item>
               <Form.Item label="Короткий опис публікації" name={'desc'}>
-                <Input />
+                <Input showCount maxLength={300} />
+              </Form.Item>
+              <Form.Item
+                name={'showDesc'}
+                label={'Приховувати/не приховувати короткий опис'}
+                className="mt-[-15px]"
+              >
+                <Switch size={'default'} className="bg-black" defaultChecked />
               </Form.Item>
             </div>
           </div>
@@ -264,10 +282,10 @@ const AddPostForm: FC<Props<News>> = ({
               </Form.Item>
             </div>
             <div className="flex justify-end gap-5">
-              <Form.Item name={'showAuthorDesc'} label={'Додати опис автора'}>
+              <Form.Item name={'showAuthor'} label={'Приховати автора'}>
                 <Switch size={'default'} className="bg-black" />
               </Form.Item>
-              <Form.Item name={'showAuthor'} label={'Приховати автора'}>
+              <Form.Item name={'showAuthorDesc'} label={'Приховати опис'}>
                 <Switch size={'default'} className="bg-black" />
               </Form.Item>
               <Form.Item name={'live'} label={'Наживо'}>
@@ -276,7 +294,7 @@ const AddPostForm: FC<Props<News>> = ({
             </div>
           </div>
           <div className="relative">
-            <div className="absolute left-[350px] top-3 z-20">
+            <div className="absolute left-[350px] top-3 z-[4]">
               <CustomImageButton />
             </div>
             <Form.Item name={'content'}>
@@ -286,6 +304,13 @@ const AddPostForm: FC<Props<News>> = ({
                 ref={quillRef}
               />
             </Form.Item>
+            <p className="mb-8 text-[10px] leading-[12px] text-gray-500">
+              Матеріали, опубліковані у розділах: «Новини бізнесу», «Політичні
+              новини», «Прес-реліз», «Офіційні повідомлення», - публікуються на
+              правах реклами. Авторство повинно бути відсутнім, оскільки
+              матеріал не є редакційним. Також авторство не відтворюється при
+              створенні об’єднаної теми.
+            </p>
           </div>
           <MainButton htmlType="submit">{btnText}</MainButton>
           <ErrorMessage message={error} />
