@@ -107,7 +107,9 @@ const AddMediaNews: FC = () => {
                 required
                 type={'file'}
                 onChange={handleImageChange}
-                accept={'image/png, image/jpg, image/jpeg'}
+                accept={
+                  'image/png, image/jpg, image/jpeg, image/webp, image/avif'
+                }
               />
             </Form.Item>
             <Button

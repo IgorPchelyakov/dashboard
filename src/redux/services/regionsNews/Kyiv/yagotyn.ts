@@ -15,12 +15,34 @@ export const newsYagotynApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editYagotynNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/yagotyn/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeYagotynNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/yagotyn/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllYagotynNewsQuery, useGetYagotynNewsByIdQuery } =
-  newsYagotynApi;
+export const {
+  useGetAllYagotynNewsQuery,
+  useGetYagotynNewsByIdQuery,
+  useEditYagotynNewsByIdMutation,
+  useRemoveYagotynNewsMutation,
+} = newsYagotynApi;
 
 export const {
-  endpoints: { getAllYagotynNews, getYagotynNewsById },
+  endpoints: {
+    getAllYagotynNews,
+    getYagotynNewsById,
+    editYagotynNewsById,
+    removeYagotynNews,
+  },
 } = newsYagotynApi;

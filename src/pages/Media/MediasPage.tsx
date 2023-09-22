@@ -1,6 +1,6 @@
-import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
-import Layout from '@/components/Layout/Layout';
-import MediaCard from '@/components/Media/MediaCard';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Layout from '../../components/Layout/Layout';
+import MediaCard from '../../components/Media/MediaCard';
 import { useCurrentQuery } from '@/redux/services/auth';
 import {
   useAddMediaMutation,
@@ -221,7 +221,9 @@ const MediasPage: FC = () => {
                   required
                   type={'file'}
                   onChange={handleImageChange}
-                  accept={'image/png, image/jpg, image/jpeg'}
+                  accept={
+                    'image/png, image/jpg, image/jpeg, image/webp, image/avif'
+                  }
                 />
               </Form.Item>
               <Button

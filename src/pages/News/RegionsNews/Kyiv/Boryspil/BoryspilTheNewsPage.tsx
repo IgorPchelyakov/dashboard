@@ -13,7 +13,6 @@ const BoryspilTheNewsPage: FC = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [titleQuery, setTitleQuery] = useState('');
-  const [feedQuery, setFeedQuery] = useState('');
   const pageSize = 20;
 
   const [filteredData, setFilteredData] = useState([]);
@@ -89,6 +88,7 @@ const BoryspilTheNewsPage: FC = () => {
               id={news.id}
               publishedAt={news.publishedAt}
               feed={news.feed}
+              section={news.section}
               postType={news.postType}
               title={news.title}
               views={news.views}

@@ -15,12 +15,34 @@ export const newsOdesaApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editOdesaNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/odesa/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeOdesaNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/odesa/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllOdesaNewsQuery, useGetOdesaNewsByIdQuery } =
-  newsOdesaApi;
+export const {
+  useGetAllOdesaNewsQuery,
+  useGetOdesaNewsByIdQuery,
+  useEditOdesaNewsByIdMutation,
+  useRemoveOdesaNewsMutation,
+} = newsOdesaApi;
 
 export const {
-  endpoints: { getAllOdesaNews, getOdesaNewsById },
+  endpoints: {
+    getAllOdesaNews,
+    getOdesaNewsById,
+    editOdesaNewsById,
+    removeOdesaNews,
+  },
 } = newsOdesaApi;

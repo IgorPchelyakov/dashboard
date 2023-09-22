@@ -66,8 +66,10 @@ const BrovaryNewsPage: FC = () => {
               className="object-cover"
               preview={true}
             />
-            <figcaption></figcaption>
           </figure>
+          <p>
+            {data.mainImgDesc} {data.mainImgAuthor}
+          </p>
           <div
             className={s.content}
             dangerouslySetInnerHTML={{ __html: data.content }}

@@ -15,12 +15,34 @@ export const newsChornomorskApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editChornomorskNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/chornomorsk/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeChornomorskNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/chornomorsk/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllChornomorskNewsQuery, useGetChornomorskNewsByIdQuery } =
-  newsChornomorskApi;
+export const {
+  useGetAllChornomorskNewsQuery,
+  useGetChornomorskNewsByIdQuery,
+  useEditChornomorskNewsByIdMutation,
+  useRemoveChornomorskNewsMutation,
+} = newsChornomorskApi;
 
 export const {
-  endpoints: { getAllChornomorskNews, getChornomorskNewsById },
+  endpoints: {
+    getAllChornomorskNews,
+    getChornomorskNewsById,
+    editChornomorskNewsById,
+    removeChornomorskNews,
+  },
 } = newsChornomorskApi;

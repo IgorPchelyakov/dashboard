@@ -92,6 +92,11 @@ const TheNewsPage: FC = () => {
               views={news.views}
               UserId={news.UserId}
               section={news.section}
+              mainImage={news.mainImage}
+              block={news.block}
+              createdAt={news.createdAt}
+              updatedAt={news.updatedAt}
+              url={news.url}
             />
           ))
         ) : (

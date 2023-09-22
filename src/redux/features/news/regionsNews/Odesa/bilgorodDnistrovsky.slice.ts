@@ -1,4 +1,4 @@
-import { newsBilgorodDnistrovskyApi } from '@/redux/services/regionsNews/Odesa/BilgorodDnistrovsky';
+import { newsBilgorodDnistrovskyApi } from '@/redux/services/regionsNews/Odesa/bilgorodDnistrovsky';
 import { RootState } from '@/redux/store';
 import { News } from '@/types/news';
 import { createSlice } from '@reduxjs/toolkit';

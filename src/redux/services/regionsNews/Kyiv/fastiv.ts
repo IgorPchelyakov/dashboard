@@ -15,12 +15,34 @@ export const newsFastivApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editFastivNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/fastiv/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeFastivNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/fastiv/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllFastivNewsQuery, useGetFastivNewsByIdQuery } =
-  newsFastivApi;
+export const {
+  useGetAllFastivNewsQuery,
+  useGetFastivNewsByIdQuery,
+  useEditFastivNewsByIdMutation,
+  useRemoveFastivNewsMutation,
+} = newsFastivApi;
 
 export const {
-  endpoints: { getAllFastivNews, getFastivNewsById },
+  endpoints: {
+    getAllFastivNews,
+    getFastivNewsById,
+    editFastivNewsById,
+    removeFastivNews,
+  },
 } = newsFastivApi;

@@ -15,12 +15,34 @@ export const newsSlavutychApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editSlavutychNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/slavutych/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeSlavutychNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/slavutych/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllSlavutychNewsQuery, useGetSlavutychNewsByIdQuery } =
-  newsSlavutychApi;
+export const {
+  useGetAllSlavutychNewsQuery,
+  useGetSlavutychNewsByIdQuery,
+  useEditSlavutychNewsByIdMutation,
+  useRemoveSlavutychNewsMutation,
+} = newsSlavutychApi;
 
 export const {
-  endpoints: { getAllSlavutychNews, getSlavutychNewsById },
+  endpoints: {
+    getAllSlavutychNews,
+    getSlavutychNewsById,
+    editSlavutychNewsById,
+    removeSlavutychNews,
+  },
 } = newsSlavutychApi;

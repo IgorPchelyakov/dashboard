@@ -6,10 +6,12 @@ import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { useGetEmployeeQuery } from '@/redux/services/employees';
-import { useRemoveNewsMutation } from '@/redux/services/news';
 import { isErrorWithMessage } from '@/utils/is-error-with-message';
 import { useCurrentQuery } from '@/redux/services/auth';
-import { useGetAllBoyarkaNewsQuery } from '@/redux/services/regionsNews/Kyiv/boyarka';
+import {
+  useGetAllBoyarkaNewsQuery,
+  useRemoveBoyarkaNewsMutation,
+} from '@/redux/services/regionsNews/Kyiv/boyarka';
 
 const BoyarkaPostCard: FC<News> = ({
   id,
@@ -49,7 +51,7 @@ const BoyarkaPostCard: FC<News> = ({
   const uniqueWords = Array.from(new Set(formattedFeed.split(' ')));
   const uniqueFeed = uniqueWords.join(' ');
 
-  const [removeNews] = useRemoveNewsMutation();
+  const [removeBoyarkaNews] = useRemoveBoyarkaNewsMutation();
   const [isDeleteModalOpen, setIsDeleteOpenModal] = useState(false);
   const { refetch } = useGetAllBoyarkaNewsQuery();
   const [error, setError] = useState('');
@@ -83,7 +85,7 @@ const BoyarkaPostCard: FC<News> = ({
       currentUserRole === 'Партнер ММ'
     ) {
       try {
-        await removeNews(id).unwrap();
+        await removeBoyarkaNews(id).unwrap();
         success();
         refetch();
       } catch (err) {
@@ -114,7 +116,7 @@ const BoyarkaPostCard: FC<News> = ({
         currentUserId === UserId)
     ) {
       try {
-        await removeNews(id).unwrap();
+        await removeBoyarkaNews(id).unwrap();
         success();
         refetch();
       } catch (err) {
@@ -188,7 +190,7 @@ const BoyarkaPostCard: FC<News> = ({
               <Button
                 type={'text'}
                 onClick={() => {
-                  navigate(`${Paths.newsEdit}/${id}`);
+                  navigate(`${Paths.editBoyarkaNews}/${id}`);
                 }}
                 icon={<EditOutlined />}
               ></Button>

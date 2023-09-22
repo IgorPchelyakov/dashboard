@@ -15,12 +15,34 @@ export const newsIrpinApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editIrpinNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/irpin/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeIrpinNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/irpin/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllIrpinNewsQuery, useGetIrpinNewsByIdQuery } =
-  newsIrpinApi;
+export const {
+  useGetAllIrpinNewsQuery,
+  useGetIrpinNewsByIdQuery,
+  useEditIrpinNewsByIdMutation,
+  useRemoveIrpinNewsMutation,
+} = newsIrpinApi;
 
 export const {
-  endpoints: { getAllIrpinNews, getIrpinNewsById },
+  endpoints: {
+    getAllIrpinNews,
+    getIrpinNewsById,
+    editIrpinNewsById,
+    removeIrpinNews,
+  },
 } = newsIrpinApi;

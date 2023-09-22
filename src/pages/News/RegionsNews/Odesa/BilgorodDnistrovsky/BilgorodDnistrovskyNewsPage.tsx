@@ -10,7 +10,7 @@ import s from '../../../NewsPage.module.css';
 import { useGetEmployeeQuery } from '@/redux/services/employees';
 import moment from 'moment';
 import 'moment/locale/uk';
-import { useGetBilgorodDnistrovskyNewsByIdQuery } from '@/redux/services/regionsNews/Odesa/BilgorodDnistrovsky';
+import { useGetBilgorodDnistrovskyNewsByIdQuery } from '@/redux/services/regionsNews/Odesa/bilgorodDnistrovsky';
 moment.locale('uk');
 
 const BilgorodDnistrovskyNewsPage: FC = () => {
@@ -68,8 +68,10 @@ const BilgorodDnistrovskyNewsPage: FC = () => {
               className="object-cover"
               preview={true}
             />
-            <figcaption></figcaption>
           </figure>
+          <p>
+            {data.mainImgDesc} {data.mainImgAuthor}
+          </p>
           <div
             className={s.content}
             dangerouslySetInnerHTML={{ __html: data.content }}

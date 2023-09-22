@@ -44,13 +44,23 @@ const AddEmployeePage: FC = () => {
       formData.append('city', data.city);
       formData.append('tel', data.tel);
       formData.append('email', data.email);
-      formData.append('telegramLink', data.telegramLink);
-      formData.append('facebookLink', data.facebookLink);
-      formData.append('instagramLink', data.instagramLink);
-      formData.append('twitterLink', data.twitterLink);
-      formData.append('descUser', data.descUser);
+      if (data.telegramLink !== undefined) {
+        formData.append('telegramLink', data.telegramLink);
+      }
+      if (data.facebookLink !== undefined) {
+        formData.append('facebookLink', data.facebookLink);
+      }
+      if (data.instagramLink !== undefined) {
+        formData.append('instagramLink', data.instagramLink);
+      }
+      if (data.twitterLink !== undefined) {
+        formData.append('twitterLink', data.twitterLink);
+      }
+      if (data.descUser !== undefined) {
+        formData.append('descUser', data.descUser);
+      }
       formData.append('role', data.role);
-      formData.append('accessRights', data.accessRights);
+      formData.append('accessRights', data.accessRights.toString());
       if (avatarFile) {
         formData.append('avatarFile', avatarFile);
       }

@@ -15,12 +15,34 @@ export const newsBerezanApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editBerezanNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/berezan/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeBerezanNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/berezan/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllBerezanNewsQuery, useGetBerezanNewsByIdQuery } =
-  newsBerezanApi;
+export const {
+  useGetAllBerezanNewsQuery,
+  useGetBerezanNewsByIdQuery,
+  useEditBerezanNewsByIdMutation,
+  useRemoveBerezanNewsMutation,
+} = newsBerezanApi;
 
 export const {
-  endpoints: { getAllBerezanNews, getBerezanNewsById },
+  endpoints: {
+    getAllBerezanNews,
+    getBerezanNewsById,
+    editBerezanNewsById,
+    removeBerezanNews,
+  },
 } = newsBerezanApi;

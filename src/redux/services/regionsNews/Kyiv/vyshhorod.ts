@@ -15,12 +15,34 @@ export const newsVyshhorodApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editVyshhorodNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/vyshhorod/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeVyshhorodNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/vyshhorod/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllVyshhorodNewsQuery, useGetVyshhorodNewsByIdQuery } =
-  newsVyshhorodApi;
+export const {
+  useGetAllVyshhorodNewsQuery,
+  useGetVyshhorodNewsByIdQuery,
+  useEditVyshhorodNewsByIdMutation,
+  useRemoveVyshhorodNewsMutation,
+} = newsVyshhorodApi;
 
 export const {
-  endpoints: { getAllVyshhorodNews, getVyshhorodNewsById },
+  endpoints: {
+    getAllVyshhorodNews,
+    getVyshhorodNewsById,
+    editVyshhorodNewsById,
+    removeVyshhorodNews,
+  },
 } = newsVyshhorodApi;

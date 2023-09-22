@@ -26,4 +26,25 @@ export type Employee = {
   file?: File | null;
 };
 
-export type EmployeeWithoutId = Omit<Employee, 'id'>;
+export type EmployeeWithoutId = {
+  login: string;
+  email: string;
+  role: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  nickName: string;
+  job: string;
+  city: string;
+  tel: string;
+  telegramLink?: string;
+  facebookLink?: string;
+  instagramLink?: string;
+  twitterLink?: string;
+  descUser?: string;
+  avatarUrl?: string | null | undefined;
+  accessRights: boolean;
+  file?: File | null;
+};

@@ -29,6 +29,8 @@ import { Media } from '@/types/media';
 import locale from 'antd/es/date-picker/locale/uk_UA';
 import dayjs from 'dayjs';
 import 'dayjs/locale/uk';
+import { useCurrentQuery } from '@/redux/services/auth';
+import '@/components/Posts/style.css';
 
 dayjs.locale('uk');
 
@@ -294,11 +296,12 @@ const AddPostForm: FC<Props<News>> = ({
             </div>
           </div>
           <div className="relative">
-            <div className="absolute left-[350px] top-3 z-[4]">
+            <div className="absolute left-[360px] top-[22px] z-[4]">
               <CustomImageButton />
             </div>
             <Form.Item name={'content'}>
               <ReactQuill
+                className={'ql-editor'}
                 modules={quillModules}
                 onChange={handleContentChange}
                 ref={quillRef}

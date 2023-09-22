@@ -1,0 +1,9 @@
+.ql-container {
+    max-height: 700px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.ql-editor p {
+    font-size: 16px;
+}

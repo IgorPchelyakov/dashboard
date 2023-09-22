@@ -8,6 +8,8 @@ import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/images/icons/DAYCOM LOGOTIP.svg';
+import lineNews from '@/assets/images/icons/publication.svg';
+import createNews from '@/assets/images/icons/createNews.svg';
 import { useAppSelector } from '@/hooks/hooks';
 
 const Header: FC = () => {
@@ -64,33 +66,51 @@ const Header: FC = () => {
               </div>
             </Space>
           </MainMenuDrawer>
-          <Image src={Logo} preview={false} />
-          <MainMenuDrawer
-            title={'Обліковий запис'}
-            placement={'right'}
-            closable={false}
-            onClose={onInfoMenuClose}
-            open={infoMenu}
-            onClick={showInfoDrawer}
-            htmlType={'button'}
-            type={'ghost'}
-            icon={<UserOutlined />}
+          <Link
+            to={Paths.home}
+            className="h-[21px] w-[145px] translate-x-[167px] translate-y-[-18px]"
           >
-            <Space className="flex flex-col gap-4">
-              <Image
-                src={user?.avatarUrl}
-                preview={false}
-                width={100}
-                height={100}
-                className="rounded-[50%] object-cover"
-              />
-              <div>
-                {user?.lastName} {user?.firstName} {user?.middleName}
-              </div>
-              <div className="mb-5">{user?.job}</div>
-              <MainButton onClick={onLogoutClick}>Завершити сеанс</MainButton>
-            </Space>
-          </MainMenuDrawer>
+            <Image src={Logo} preview={false} />
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link to={Paths.news} className="flex h-[24px] items-center gap-2">
+              <Image src={lineNews} height={22} width={22} preview={false} />
+              <div>Стрічка новин</div>
+            </Link>
+            <Link
+              to={Paths.newsAdd}
+              className="flex h-[24px] items-center gap-2"
+            >
+              <Image height={22} width={22} src={createNews} preview={false} />
+              <div>Створити публікацію</div>
+            </Link>
+            <MainMenuDrawer
+              title={'Обліковий запис'}
+              placement={'right'}
+              closable={false}
+              onClose={onInfoMenuClose}
+              open={infoMenu}
+              onClick={showInfoDrawer}
+              htmlType={'button'}
+              type={'ghost'}
+              icon={<UserOutlined />}
+            >
+              <Space className="flex flex-col gap-4">
+                <Image
+                  src={user?.avatarUrl}
+                  preview={false}
+                  width={100}
+                  height={100}
+                  className="rounded-[50%] object-cover"
+                />
+                <div>
+                  {user?.lastName} {user?.firstName} {user?.middleName}
+                </div>
+                <div className="mb-5">{user?.job}</div>
+                <MainButton onClick={onLogoutClick}>Завершити сеанс</MainButton>
+              </Space>
+            </MainMenuDrawer>
+          </div>
         </div>
       </Layout.Header>
     </>

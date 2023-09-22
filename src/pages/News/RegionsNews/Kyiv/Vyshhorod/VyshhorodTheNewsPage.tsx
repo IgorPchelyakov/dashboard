@@ -88,6 +88,7 @@ const VyshhorodTheNewsPage: FC = () => {
               id={news.id}
               publishedAt={news.publishedAt}
               feed={news.feed}
+              section={news.section}
               postType={news.postType}
               title={news.title}
               views={news.views}

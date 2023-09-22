@@ -15,12 +15,34 @@ export const newsVasylkivApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editVasylkivNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/vasylkiv/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeVasylkivNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/vasylkiv/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllVasylkivNewsQuery, useGetVasylkivNewsByIdQuery } =
-  newsVasylkivApi;
+export const {
+  useGetAllVasylkivNewsQuery,
+  useGetVasylkivNewsByIdQuery,
+  useEditVasylkivNewsByIdMutation,
+  useRemoveVasylkivNewsMutation,
+} = newsVasylkivApi;
 
 export const {
-  endpoints: { getAllVasylkivNews, getVasylkivNewsById },
+  endpoints: {
+    getAllVasylkivNews,
+    getVasylkivNewsById,
+    editVasylkivNewsById,
+    removeVasylkivNews,
+  },
 } = newsVasylkivApi;

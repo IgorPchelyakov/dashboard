@@ -15,14 +15,34 @@ export const newsBilgorodDnistrovskyApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editBilgorodDnistrovskyNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/bilgorod-dnistrovsky/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeBilgorodDnistrovskyNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/bilgorod-dnistrovsky/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
 export const {
   useGetAllBilgorodDnistrovskyNewsQuery,
   useGetBilgorodDnistrovskyNewsByIdQuery,
+  useEditBilgorodDnistrovskyNewsByIdMutation,
+  useRemoveBilgorodDnistrovskyNewsMutation,
 } = newsBilgorodDnistrovskyApi;
 
 export const {
-  endpoints: { getAllBilgorodDnistrovskyNews, getBilgorodDnistrovskyNewsById },
+  endpoints: {
+    getAllBilgorodDnistrovskyNews,
+    getBilgorodDnistrovskyNewsById,
+    editBilgorodDnistrovskyNewsById,
+    removeBilgorodDnistrovskyNews,
+  },
 } = newsBilgorodDnistrovskyApi;

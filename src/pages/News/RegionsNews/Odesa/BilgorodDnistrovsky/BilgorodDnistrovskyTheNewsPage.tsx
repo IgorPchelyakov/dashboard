@@ -2,7 +2,7 @@ import Layout from '@/components/Layout/Layout';
 import BilgorodDnistrovskyPostCard from '@/components/Posts/Regions/Odesa/BilgorodDnistrovskyNewsCard';
 import RegionsPopover from '@/components/RegionPopover/RegionsPopover';
 import { Paths } from '@/paths';
-import { useGetAllBilgorodDnistrovskyNewsQuery } from '@/redux/services/regionsNews/Odesa/BilgorodDnistrovsky';
+import { useGetAllBilgorodDnistrovskyNewsQuery } from '@/redux/services/regionsNews/Odesa/bilgorodDnistrovsky';
 
 import { News } from '@/types/news';
 import { Button, Input, Pagination, Spin } from 'antd';
@@ -88,6 +88,7 @@ const BilgorodDnistrovskyTheNewsPage: FC = () => {
               id={news.id}
               publishedAt={news.publishedAt}
               feed={news.feed}
+              section={news.section}
               postType={news.postType}
               title={news.title}
               views={news.views}

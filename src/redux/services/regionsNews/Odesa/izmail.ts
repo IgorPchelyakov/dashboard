@@ -15,12 +15,34 @@ export const newsIzmailApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editIzmailNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/izmail/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeIzmailNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/izmail/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllIzmailNewsQuery, useGetIzmailNewsByIdQuery } =
-  newsIzmailApi;
+export const {
+  useGetAllIzmailNewsQuery,
+  useGetIzmailNewsByIdQuery,
+  useEditIzmailNewsByIdMutation,
+  useRemoveIzmailNewsMutation,
+} = newsIzmailApi;
 
 export const {
-  endpoints: { getAllIzmailNews, getIzmailNewsById },
+  endpoints: {
+    getAllIzmailNews,
+    getIzmailNewsById,
+    editIzmailNewsById,
+    removeIzmailNews,
+  },
 } = newsIzmailApi;

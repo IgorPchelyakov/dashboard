@@ -15,12 +15,34 @@ export const newsPodilskApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editPodilskNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/podilsk/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removePodilskNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/podilsk/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllPodilskNewsQuery, useGetPodilskNewsByIdQuery } =
-  newsPodilskApi;
+export const {
+  useGetAllPodilskNewsQuery,
+  useGetPodilskNewsByIdQuery,
+  useEditPodilskNewsByIdMutation,
+  useRemovePodilskNewsMutation,
+} = newsPodilskApi;
 
 export const {
-  endpoints: { getAllPodilskNews, getPodilskNewsById },
+  endpoints: {
+    getAllPodilskNews,
+    getPodilskNewsById,
+    editPodilskNewsById,
+    removePodilskNews,
+  },
 } = newsPodilskApi;

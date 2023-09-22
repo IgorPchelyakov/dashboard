@@ -15,12 +15,34 @@ export const newsVyshneveApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editVyshneveNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/vyshneve/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeVyshneveNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/vyshneve/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllVyshneveNewsQuery, useGetVyshneveNewsByIdQuery } =
-  newsVyshneveApi;
+export const {
+  useGetAllVyshneveNewsQuery,
+  useGetVyshneveNewsByIdQuery,
+  useEditVyshneveNewsByIdMutation,
+  useRemoveVyshneveNewsMutation,
+} = newsVyshneveApi;
 
 export const {
-  endpoints: { getAllVyshneveNews, getVyshneveNewsById },
+  endpoints: {
+    getAllVyshneveNews,
+    getVyshneveNewsById,
+    editVyshneveNewsById,
+    removeVyshneveNews,
+  },
 } = newsVyshneveApi;

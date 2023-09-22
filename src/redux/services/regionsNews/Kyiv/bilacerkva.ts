@@ -15,12 +15,34 @@ export const newsBilacerkvaApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editBilacerkvaNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/bilacerkva/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeBilacerkvaNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/bilacerkva/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllBilacerkvaNewsQuery, useGetBilacerkvaNewsByIdQuery } =
-  newsBilacerkvaApi;
+export const {
+  useGetAllBilacerkvaNewsQuery,
+  useGetBilacerkvaNewsByIdQuery,
+  useEditBilacerkvaNewsByIdMutation,
+  useRemoveBilacerkvaNewsMutation,
+} = newsBilacerkvaApi;
 
 export const {
-  endpoints: { getAllBilacerkvaNews, getBilacerkvaNewsById },
+  endpoints: {
+    getAllBilacerkvaNews,
+    getBilacerkvaNewsById,
+    editBilacerkvaNewsById,
+    removeBilacerkvaNews,
+  },
 } = newsBilacerkvaApi;

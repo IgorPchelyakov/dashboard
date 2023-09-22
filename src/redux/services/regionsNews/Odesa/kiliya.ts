@@ -15,12 +15,34 @@ export const newsKiliyaApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editKiliyaNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/kiliya/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeKiliyaNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/kiliya/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllKiliyaNewsQuery, useGetKiliyaNewsByIdQuery } =
-  newsKiliyaApi;
+export const {
+  useGetAllKiliyaNewsQuery,
+  useGetKiliyaNewsByIdQuery,
+  useEditKiliyaNewsByIdMutation,
+  useRemoveKiliyaNewsMutation,
+} = newsKiliyaApi;
 
 export const {
-  endpoints: { getAllKiliyaNews, getKiliyaNewsById },
+  endpoints: {
+    getAllKiliyaNews,
+    getKiliyaNewsById,
+    editKiliyaNewsById,
+    removeKiliyaNews,
+  },
 } = newsKiliyaApi;

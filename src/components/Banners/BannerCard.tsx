@@ -4,7 +4,6 @@ import { Card, Image } from 'antd';
 import moment from 'moment';
 
 const BannerCard: FC<Banner> = ({
-  key,
   id,
   title,
   imgUrl,
@@ -21,7 +20,7 @@ const BannerCard: FC<Banner> = ({
   return (
     <>
       <Card
-        key={key}
+        key={id}
         title={null}
         className="relative mx-auto mb-8 max-w-[1200px]"
       >

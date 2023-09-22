@@ -15,11 +15,34 @@ export const newsKyivApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editKyivNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/kyiv/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeKyivNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/kyiv/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllKyivNewsQuery, useGetKyivNewsByIdQuery } = newsKyivApi;
+export const {
+  useGetAllKyivNewsQuery,
+  useGetKyivNewsByIdQuery,
+  useEditKyivNewsByIdMutation,
+  useRemoveKyivNewsMutation,
+} = newsKyivApi;
 
 export const {
-  endpoints: { getAllKyivNews, getKyivNewsById },
+  endpoints: {
+    getAllKyivNews,
+    getKyivNewsById,
+    editKyivNewsById,
+    removeKyivNews,
+  },
 } = newsKyivApi;

@@ -15,12 +15,34 @@ export const newsBrovaryApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editBrovaryNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/brovary/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeBrovaryNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/brovary/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllBrovaryNewsQuery, useGetBrovaryNewsByIdQuery } =
-  newsBrovaryApi;
+export const {
+  useGetAllBrovaryNewsQuery,
+  useGetBrovaryNewsByIdQuery,
+  useEditBrovaryNewsByIdMutation,
+  useRemoveBrovaryNewsMutation,
+} = newsBrovaryApi;
 
 export const {
-  endpoints: { getAllBrovaryNews, getBrovaryNewsById },
+  endpoints: {
+    getAllBrovaryNews,
+    getBrovaryNewsById,
+    editBrovaryNewsById,
+    removeBrovaryNews,
+  },
 } = newsBrovaryApi;

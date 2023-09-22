@@ -15,12 +15,34 @@ export const newsBoyarkaApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editBoyarkaNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/boyarka/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeBoyarkaNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/boyarka/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllBoyarkaNewsQuery, useGetBoyarkaNewsByIdQuery } =
-  newsBoyarkaApi;
+export const {
+  useGetAllBoyarkaNewsQuery,
+  useGetBoyarkaNewsByIdQuery,
+  useEditBoyarkaNewsByIdMutation,
+  useRemoveBoyarkaNewsMutation,
+} = newsBoyarkaApi;
 
 export const {
-  endpoints: { getAllBoyarkaNews, getBoyarkaNewsById },
+  endpoints: {
+    getAllBoyarkaNews,
+    getBoyarkaNewsById,
+    editBoyarkaNewsById,
+    removeBoyarkaNews,
+  },
 } = newsBoyarkaApi;

@@ -15,12 +15,34 @@ export const newsSkvyraApi = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    editSkvyraNewsById: builder.mutation<string, News>({
+      query: (news) => ({
+        url: `/skvyra/news/edit/${news.id}`,
+        method: 'PUT',
+        body: news,
+      }),
+    }),
+    removeSkvyraNews: builder.mutation<string, string>({
+      query: (id) => ({
+        url: `/skvyra/news/delete/${id}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllSkvyraNewsQuery, useGetSkvyraNewsByIdQuery } =
-  newsSkvyraApi;
+export const {
+  useGetAllSkvyraNewsQuery,
+  useGetSkvyraNewsByIdQuery,
+  useEditSkvyraNewsByIdMutation,
+  useRemoveSkvyraNewsMutation,
+} = newsSkvyraApi;
 
 export const {
-  endpoints: { getAllSkvyraNews, getSkvyraNewsById },
+  endpoints: {
+    getAllSkvyraNews,
+    getSkvyraNewsById,
+    editSkvyraNewsById,
+    removeSkvyraNews,
+  },
 } = newsSkvyraApi;

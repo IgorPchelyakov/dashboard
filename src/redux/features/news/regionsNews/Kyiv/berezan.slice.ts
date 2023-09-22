@@ -1,4 +1,3 @@
-import { newsApi } from '@/redux/services/news';
 import { newsBerezanApi } from '@/redux/services/regionsNews/Kyiv/berezan';
 import { RootState } from '@/redux/store';
 import { News } from '@/types/news';

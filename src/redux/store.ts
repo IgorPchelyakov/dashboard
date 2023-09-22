@@ -9,7 +9,8 @@ import employeesReducer from './features/employees/employees.slice';
 import newsReducer from './features/news/news.slice';
 import mediaReducer from './features/media/media.slice';
 import bannerReducer from './features/banners/banners.slice';
-
+import countersReducer from './features/counters/counters.slice';
+// Kyiv
 import newsBerezanReducer from './features/news/regionsNews/Kyiv/berezan.slice';
 import newsBilacerkvaReducer from './features/news/regionsNews/Kyiv/bilacerkva.slice';
 import newsBoryspilReducer from './features/news/regionsNews/Kyiv/boryspil.slice';
@@ -35,6 +36,8 @@ import newsKiliyaReducer from './features/news/regionsNews/Odesa/kiliya.slice';
 import newsOdesaReducer from './features/news/regionsNews/Odesa/odesa.slice';
 import newsPodilskReducer from './features/news/regionsNews/Odesa/podilsk.slice';
 import newsYouzhneReducer from './features/news/regionsNews/Odesa/youzhne.slice';
+// Dnipro
+import newsDniproReducer from './features/news/regionsNews/Dnipro/dnipro.slice';
 
 import { api } from './services/api';
 import { listenerMiddleware } from '@/middleware/auth';
@@ -44,6 +47,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   employees: employeesReducer,
   news: newsReducer,
+  counters: countersReducer,
   //Kyiv Region
   newsBerezan: newsBerezanReducer,
   newsBilacerkva: newsBilacerkvaReducer,
@@ -70,6 +74,8 @@ const rootReducer = combineReducers({
   newsOdesa: newsOdesaReducer,
   newsPodilsk: newsPodilskReducer,
   newsYouzhne: newsYouzhneReducer,
+  // DniproRegion
+  newsDnipro: newsDniproReducer,
   media: mediaReducer,
   banners: bannerReducer,
 });

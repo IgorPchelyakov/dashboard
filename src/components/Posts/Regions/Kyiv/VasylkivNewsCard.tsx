@@ -6,15 +6,18 @@ import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { useGetEmployeeQuery } from '@/redux/services/employees';
-import { useRemoveNewsMutation } from '@/redux/services/news';
 import { isErrorWithMessage } from '@/utils/is-error-with-message';
 import { useCurrentQuery } from '@/redux/services/auth';
-import { useGetAllVasylkivNewsQuery } from '@/redux/services/regionsNews/Kyiv/vasylkiv';
+import {
+  useGetAllVasylkivNewsQuery,
+  useRemoveVasylkivNewsMutation,
+} from '@/redux/services/regionsNews/Kyiv/vasylkiv';
 
 const VasylkivPostCard: FC<News> = ({
   id,
   publishedAt,
   feed,
+  section,
   postType,
   title,
   views,
@@ -49,7 +52,7 @@ const VasylkivPostCard: FC<News> = ({
   const uniqueWords = Array.from(new Set(formattedFeed.split(' ')));
   const uniqueFeed = uniqueWords.join(' ');
 
-  const [removeNews] = useRemoveNewsMutation();
+  const [removeVasylkivNews] = useRemoveVasylkivNewsMutation();
   const [isDeleteModalOpen, setIsDeleteOpenModal] = useState(false);
   const { refetch } = useGetAllVasylkivNewsQuery();
   const [error, setError] = useState('');
@@ -83,7 +86,7 @@ const VasylkivPostCard: FC<News> = ({
       currentUserRole === 'Партнер ММ'
     ) {
       try {
-        await removeNews(id).unwrap();
+        await removeVasylkivNews(id).unwrap();
         success();
         refetch();
       } catch (err) {
@@ -114,7 +117,7 @@ const VasylkivPostCard: FC<News> = ({
         currentUserId === UserId)
     ) {
       try {
-        await removeNews(id).unwrap();
+        await removeVasylkivNews(id).unwrap();
         success();
         refetch();
       } catch (err) {
@@ -188,7 +191,7 @@ const VasylkivPostCard: FC<News> = ({
               <Button
                 type={'text'}
                 onClick={() => {
-                  navigate(`${Paths.newsEdit}/${id}`);
+                  navigate(`${Paths.editVasylkivNews}/${id}`);
                 }}
                 icon={<EditOutlined />}
               ></Button>
@@ -242,6 +245,8 @@ const VasylkivPostCard: FC<News> = ({
           <div className="w-[200px]">{uniqueFeed}</div>
           <Divider className="min-h-[20px]" type={'vertical'} />
           <div className="w-[150px]">{postType}</div>
+          <Divider className="min-h-[20px]" type={'vertical'} />
+          <div className="w-[150px]">{section}</div>
           <Divider className="min-h-[20px]" type={'vertical'} />
           <div className="w-[100px]">
             <EyeOutlined /> {views}
