@@ -95,6 +95,9 @@ const Header: FC = () => {
               type={'ghost'}
               icon={<UserOutlined />}
             >
+              <Space className="mb-4 flex justify-center">
+                <div className="text-2xl font-bold">Вітаємо!</div>
+              </Space>
               <Space className="flex flex-col gap-4">
                 <Image
                   src={user?.avatarUrl}
